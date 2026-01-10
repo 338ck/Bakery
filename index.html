@@ -71,8 +71,10 @@
                 <div class="hidden md:block">
                     <div class="ml-4 flex items-center space-x-6">
                         <a href="#home" class="hover:text-amber-600 transition" data-key="nav_home">Home</a>
+                        <a href="#about" class="hover:text-amber-600 transition" data-key="nav_about">About Us</a>
                         <a href="#products" class="hover:text-amber-600 transition" data-key="nav_products">Products</a>
-                        <a href="#locations" class="hover:text-amber-600 transition font-semibold" data-key="nav_locations">Locations</a>
+                        <a href="#locations" class="hover:text-amber-600 transition" data-key="nav_locations">Locations</a>
+                        <a href="#contact" class="hover:text-amber-600 transition" data-key="nav_contact">Contact Us</a>
                         
                         <!-- Language Switcher -->
                         <div class="flex bg-stone-100 rounded-full p-1 border">
@@ -106,8 +108,10 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t px-4 py-4 space-y-4 shadow-lg absolute w-full">
             <a href="#home" onclick="toggleMobileMenu()" class="block hover:text-amber-600" data-key="nav_home">Home</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="block hover:text-amber-600" data-key="nav_about">About Us</a>
             <a href="#products" onclick="toggleMobileMenu()" class="block hover:text-amber-600" data-key="nav_products">Products</a>
             <a href="#locations" onclick="toggleMobileMenu()" class="block hover:text-amber-600" data-key="nav_locations">Locations</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block hover:text-amber-600" data-key="nav_contact">Contact Us</a>
             <a href="#order" onclick="toggleMobileMenu()" class="block text-amber-700 font-bold" data-key="nav_order">Order Online</a>
         </div>
     </nav>
@@ -145,15 +149,42 @@
         </div>
     </section>
 
-    <!-- Products Section -->
-    <section id="products" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl text-amber-900 mb-4" data-key="products_title">Our Special Menu</h2>
-            <p class="text-stone-600" data-key="products_subtitle">Freshly baked 9 signature items for you.</p>
+    <!-- About Us Section -->
+    <section id="about" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=80" alt="About Bakery" class="rounded-3xl shadow-xl">
+                </div>
+                <div class="md:w-1/2">
+                    <h2 class="text-4xl text-amber-900 mb-6" data-key="about_title">Our Story</h2>
+                    <p class="text-stone-600 mb-6 text-lg leading-relaxed" data-key="about_p1">Founded in the heart of Tissamaharama, Deluxe Crumbs Bakery started with a simple mission: to bring the authentic taste of artisan baking to our community. Every loaf of bread and every slice of cake we serve is a testament to our dedication to quality.</p>
+                    <p class="text-stone-600 mb-8 text-lg leading-relaxed" data-key="about_p2">We use only the finest ingredients, sourced locally whenever possible, to ensure that every bite you take is fresh, healthy, and absolutely delicious. Our bakers combine years of experience with traditional techniques to create wonders.</p>
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="border-l-4 border-amber-700 pl-4">
+                            <h4 class="font-bold text-2xl text-amber-900">10+</h4>
+                            <p class="text-stone-500 text-sm" data-key="about_stat1">Years Experience</p>
+                        </div>
+                        <div class="border-l-4 border-amber-700 pl-4">
+                            <h4 class="font-bold text-2xl text-amber-900">50+</h4>
+                            <p class="text-stone-500 text-sm" data-key="about_stat2">Unique Products</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10" id="product-grid">
-            <!-- Dynamic products -->
+    <!-- Products Section -->
+    <section id="products" class="py-24 bg-stone-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl text-amber-900 mb-4" data-key="products_title">Our Special Menu</h2>
+                <p class="text-stone-600" data-key="products_subtitle">Freshly baked 9 signature items for you.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10" id="product-grid">
+                <!-- Dynamic products -->
+            </div>
         </div>
     </section>
 
@@ -220,6 +251,53 @@
         </div>
     </section>
 
+    <!-- Contact Us Section -->
+    <section id="contact" class="py-24 bg-amber-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl mb-4" data-key="contact_title">Contact Us</h2>
+                <p class="text-amber-200" data-key="contact_subtitle">We'd love to hear from you. Send us a message!</p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div class="space-y-8">
+                    <div class="flex items-center gap-6">
+                        <div class="bg-amber-800 w-14 h-14 rounded-full flex items-center justify-center text-2xl">
+                            <i class="fa-solid fa-phone"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg" data-key="contact_phone_label">Call Us</h4>
+                            <p class="text-amber-200">+94 47 123 4567</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-6">
+                        <div class="bg-amber-800 w-14 h-14 rounded-full flex items-center justify-center text-2xl">
+                            <i class="fa-solid fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg" data-key="contact_email_label">Email Us</h4>
+                            <p class="text-amber-200">hello@deluxecrumbs.lk</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-6">
+                        <div class="bg-amber-800 w-14 h-14 rounded-full flex items-center justify-center text-2xl">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg" data-key="contact_hours_label">Business Hours</h4>
+                            <p class="text-amber-200">Daily: 7:00 AM - 8:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+                <form class="bg-white p-8 rounded-3xl space-y-4">
+                    <input type="text" class="w-full p-4 bg-stone-50 border rounded-xl text-stone-800 outline-none focus:ring-2 focus:ring-amber-500/20" data-placeholder="input_name">
+                    <input type="email" class="w-full p-4 bg-stone-50 border rounded-xl text-stone-800 outline-none focus:ring-2 focus:ring-amber-500/20" placeholder="Email Address">
+                    <textarea rows="4" class="w-full p-4 bg-stone-50 border rounded-xl text-stone-800 outline-none focus:ring-2 focus:ring-amber-500/20" placeholder="Your Message..."></textarea>
+                    <button type="button" class="w-full bg-amber-700 text-white py-4 rounded-xl font-bold hover:bg-amber-800 transition" data-key="btn_send">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
     <!-- Card Modal -->
     <div id="cardModal" class="modal-overlay">
         <div class="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-md mx-4 relative">
@@ -249,8 +327,10 @@
         const translations = {
             en: {
                 nav_home: "Home",
+                nav_about: "About Us",
                 nav_products: "Products",
                 nav_locations: "Locations",
+                nav_contact: "Contact Us",
                 nav_order: "Order Online",
                 cart_title: "Your Cart",
                 cart_empty: "Your cart is empty.",
@@ -260,6 +340,11 @@
                 hero_subtitle: "Handcrafted with love using traditional recipes.",
                 btn_menu: "View Menu",
                 btn_order: "Order Now",
+                about_title: "Our Story",
+                about_p1: "Founded in the heart of Tissamaharama, Deluxe Crumbs Bakery started with a simple mission: to bring the authentic taste of artisan baking to our community. Every loaf of bread and every slice of cake we serve is a testament to our dedication to quality.",
+                about_p2: "We use only the finest ingredients, sourced locally whenever possible, to ensure that every bite you take is fresh, healthy, and absolutely delicious.",
+                about_stat1: "Years Experience",
+                about_stat2: "Unique Products",
                 products_title: "Our Special Menu",
                 products_subtitle: "Freshly baked 9 signature items for you.",
                 loc_status: "NOW OPEN",
@@ -278,6 +363,12 @@
                 pay_card: "Card Payment",
                 btn_place_order: "Place My Order",
                 success_msg: "Order placed successfully!",
+                contact_title: "Contact Us",
+                contact_subtitle: "We'd love to hear from you. Send us a message!",
+                contact_phone_label: "Call Us",
+                contact_email_label: "Email Us",
+                contact_hours_label: "Business Hours",
+                btn_send: "Send Message",
                 card_modal_title: "Card Information",
                 btn_pay: "Pay & Confirm",
                 btn_add: "Add",
@@ -286,8 +377,10 @@
             },
             si: {
                 nav_home: "මුල් පිටුව",
+                nav_about: "අප ගැන",
                 nav_products: "නිෂ්පාදන",
                 nav_locations: "ස්ථාන",
+                nav_contact: "සම්බන්ධ වන්න",
                 nav_order: "ඇණවුම් කරන්න",
                 cart_title: "ඔබේ කරත්තය",
                 cart_empty: "ඔබේ කරත්තය හිස් ය.",
@@ -297,6 +390,11 @@
                 hero_subtitle: "සාම්ප්‍රදායික වට්ටෝරු භාවිතයෙන් ආදරයෙන් නිපදවන ලදී.",
                 btn_menu: "මෙනුව බලන්න",
                 btn_order: "දැන් ඇණවුම් කරන්න",
+                about_title: "අපේ කතාව",
+                about_p1: "තිස්සමහාරාමයේ හදවතේ පිහිටි ඩෙලක්ස් ක්‍රම්බ්ස් බේකරිය ආරම්භ වූයේ සරල අරමුණක් ඇතිවය: අපගේ ප්‍රජාවට උසස් ප්‍රමිතියෙන් යුත් බේකරි නිෂ්පාදන ලබා දීම. අප පිරිනමන සෑම පාන් පෙත්තක්ම අපගේ ගුණාත්මකභාවය පිළිබඳ සහතිකයකි.",
+                about_p2: "අපි සෑම විටම නැවුම් සහ සෞඛ්‍ය සම්පන්න නිෂ්පාදන ලබා දීම සඳහා දේශීයව ලබා ගත හැකි ඉහළම ප්‍රමිතියෙන් යුතු අමුද්‍රව්‍ය පමණක් භාවිතා කරමු.",
+                about_stat1: "වසරක අත්දැකීම්",
+                about_stat2: "සුවිශේෂී නිෂ්පාදන",
                 products_title: "අපගේ විශේෂ මෙනුව",
                 products_subtitle: "ඔබ වෙනුවෙන්ම නැවුම්ව පිළිස්සූ විශේෂාංග අයිතම 9ක්.",
                 loc_status: "දැන් විවෘතයි",
@@ -315,6 +413,12 @@
                 pay_card: "කාඩ්පත් මගින් ගෙවීම",
                 btn_place_order: "ඇණවුම තහවුරු කරන්න",
                 success_msg: "ඇණවුම සාර්ථකව සිදු කරන ලදී!",
+                contact_title: "අපව සම්බන්ධ කරගන්න",
+                contact_subtitle: "ඔබේ අදහස් අපට එවන්න. අපි ඔබෙන් ඇසීමට කැමැත්තෙමු!",
+                contact_phone_label: "අප අමතන්න",
+                contact_email_label: "ඊමේල් එවන්න",
+                contact_hours_label: "විවෘත වේලාවන්",
+                btn_send: "පණිවිඩය එවන්න",
                 card_modal_title: "කාඩ්පත් තොරතුරු",
                 btn_pay: "ගෙවා තහවුරු කරන්න",
                 btn_add: "එකතු කරන්න",
