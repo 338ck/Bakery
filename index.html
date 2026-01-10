@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deluxe Crumbs Bakery | Freshly Baked Everyday</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&family=Noto+Sans+Sinhala:wght@400;700&display=swap');
+        
+        body { font-family: 'Poppins', 'Noto Sans Sinhala', sans-serif; }
+        h1, h2, h3 { font-family: 'Playfair Display', 'Noto Sans Sinhala', serif; }
+        
+        .hero-gradient {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .scroll-smooth { scroll-behavior: smooth; }
+
+        #cart-sidebar {
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(100%);
+        }
+        #cart-sidebar.open {
+            transform: translateX(0);
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 100;
+            backdrop-filter: blur(4px);
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .status-pulse {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #10b981;
+            border-radius: 50%;
+            margin-right: 6px;
+            box-shadow: 0 0 0 rgba(16, 185, 129, 0.4);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800 scroll-smooth">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center">
+                    <span class="text-xl md:text-2xl font-bold text-amber-700 tracking-wider">DELUXE CRUMBS</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-4 flex items-center space-x-6">
+                        <a href="#home" class="hover:text-amber-600 transition" data-key="nav_home">Home</a>
+                        <a href="#products" class="hover:text-amber-600 transition" data-key="nav_products">Products</a>
+                        <a href="#locations" class="hover:text-amber-600 transition font-semibold" data-key="nav_locations">Locations</a>
+                        
+                        <!-- Language Switcher -->
+                        <div class="flex bg-stone-100 rounded-full p-1 border">
+                            <button onclick="changeLang('en')" id="lang-en" class="px-3 py-1 rounded-full text-xs font-bold transition bg-amber-700 text-white">EN</button>
+                            <button onclick="changeLang('si')" id="lang-si" class="px-3 py-1 rounded-full text-xs font-bold transition text-stone-500">සිං</button>
+                        </div>
+
+                        <button onclick="toggleCart()" class="relative p-2 text-stone-600 hover:text-amber-700 transition">
+                            <i class="fa-solid fa-cart-shopping text-xl"></i>
+                            <span id="cart-count" class="absolute -top-1 -right-1 bg-amber-700 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold">0</span>
+                        </button>
+                        <a href="#order" class="bg-amber-700 text-white px-6 py-2 rounded-full hover:bg-amber-800 transition" data-key="nav_order">Order Online</a>
+                    </div>
+                </div>
+                <!-- Mobile Toggle -->
+                <div class="md:hidden flex items-center gap-3">
+                    <div class="flex bg-stone-100 rounded-full p-1 border scale-90">
+                        <button onclick="changeLang('en')" id="lang-en-mob" class="px-2 py-1 rounded-full text-[10px] font-bold">EN</button>
+                        <button onclick="changeLang('si')" id="lang-si-mob" class="px-2 py-1 rounded-full text-[10px] font-bold">සිං</button>
+                    </div>
+                    <button onclick="toggleCart()" class="relative p-2 text-stone-600">
+                        <i class="fa-solid fa-cart-shopping text-xl"></i>
+                        <span id="cart-count-mobile" class="absolute -top-1 -right-1 bg-amber-700 text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full font-bold">0</span>
+                    </button>
+                    <button onclick="toggleMobileMenu()" class="text-stone-600">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t px-4 py-4 space-y-4 shadow-lg absolute w-full">
+            <a href="#home" onclick="toggleMobileMenu()" class="block hover:text-amber-600" data-key="nav_home">Home</a>
+            <a href="#products" onclick="toggleMobileMenu()" class="block hover:text-amber-600" data-key="nav_products">Products</a>
+            <a href="#locations" onclick="toggleMobileMenu()" class="block hover:text-amber-600" data-key="nav_locations">Locations</a>
+            <a href="#order" onclick="toggleMobileMenu()" class="block text-amber-700 font-bold" data-key="nav_order">Order Online</a>
+        </div>
+    </nav>
+
+    <!-- Cart Sidebar -->
+    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/50 z-[60] hidden"></div>
+    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full max-w-md bg-white z-[70] shadow-2xl flex flex-col">
+        <div class="p-6 border-b flex justify-between items-center bg-amber-50">
+            <h2 class="text-2xl font-bold text-amber-900" data-key="cart_title">Your Cart</h2>
+            <button onclick="toggleCart()" class="text-stone-500 hover:text-stone-800"><i class="fa-solid fa-xmark text-2xl"></i></button>
+        </div>
+        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4">
+            <p class="text-center text-stone-400 mt-10" data-key="cart_empty">Your cart is empty.</p>
+        </div>
+        <div class="p-6 border-t bg-stone-50">
+            <div class="flex justify-between text-xl font-bold mb-6">
+                <span data-key="cart_total_label">Total:</span>
+                <span id="cart-total" class="text-amber-800">Rs. 0.00</span>
+            </div>
+            <button onclick="checkoutToOrder()" class="w-full bg-amber-700 text-white py-4 rounded-xl font-bold hover:bg-amber-800 transition" data-key="btn_checkout">
+                Checkout
+            </button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-gradient h-screen flex items-center justify-center text-center text-white pt-20">
+        <div class="max-w-3xl px-4">
+            <h1 class="text-4xl md:text-7xl mb-6 leading-tight" data-key="hero_title">Artisan Breads & Heavenly Cakes</h1>
+            <p class="text-lg md:text-xl mb-8 font-light" data-key="hero_subtitle">Handcrafted with love using traditional recipes.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#products" class="bg-white text-stone-900 px-8 py-3 rounded-full font-semibold hover:bg-amber-50 transition" data-key="btn_menu">View Menu</a>
+                <a href="#order" class="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-stone-900 transition" data-key="btn_order">Order Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl text-amber-900 mb-4" data-key="products_title">Our Special Menu</h2>
+            <p class="text-stone-600" data-key="products_subtitle">Freshly baked 9 signature items for you.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10" id="product-grid">
+            <!-- Dynamic products -->
+        </div>
+    </section>
+
+    <!-- Locations -->
+    <section id="locations" class="py-24 bg-stone-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row gap-12 items-center">
+                <div class="lg:w-1/2">
+                    <div class="inline-flex items-center bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold mb-4">
+                        <span class="status-pulse"></span> <span data-key="loc_status">NOW OPEN</span>
+                    </div>
+                    <h2 class="text-4xl text-amber-900 mb-6" data-key="loc_title">Find Our Bakeries</h2>
+                    <p class="text-stone-600 mb-8 text-lg" data-key="loc_subtitle">We deliver across the Tissamaharama region.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4 p-6 bg-white rounded-2xl shadow-md border-l-4 border-amber-600 transition hover:translate-x-1 duration-300">
+                            <i class="fa-solid fa-location-dot text-amber-700 mt-1 text-2xl"></i>
+                            <div>
+                                <h4 class="font-bold text-xl text-stone-800" data-key="loc_outlet_name">Tissamaharama Main Outlet</h4>
+                                <p class="text-stone-500 mt-1" data-key="loc_address">No. 45, Main Street, Tissamaharama.</p>
+                                <div class="flex items-center gap-4 mt-4">
+                                    <span class="text-amber-700 text-sm font-semibold flex items-center gap-1">
+                                        <i class="fa-regular fa-clock"></i> 7:00 AM - 8:00 PM
+                                    </span>
+                                    <span class="text-green-600 text-sm font-semibold flex items-center gap-1">
+                                        <i class="fa-solid fa-truck-fast"></i> <span data-key="loc_delivery">Delivery Active</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 w-full h-[400px] bg-stone-200 rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15870.762888942944!2d81.27743475!3d6.27814445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae69f1092497645%3A0x46487e61e06917e!2sTissamaharama!5e0!3m2!1sen!2slk!4v1715000000000!5m2!1sen!2slk" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Form -->
+    <section id="order" class="py-24 max-w-3xl mx-auto px-4">
+        <div class="bg-white p-6 md:p-10 rounded-3xl shadow-2xl border">
+            <h2 class="text-3xl text-amber-900 mb-6 text-center" data-key="order_title">Order Online</h2>
+            <form id="orderForm" onsubmit="handleInitialOrder(event)" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <input type="text" id="custName" required class="w-full p-3 bg-stone-50 border rounded-lg outline-none focus:ring-2 focus:ring-amber-500/20" data-placeholder="input_name">
+                    <input type="tel" id="custPhone" required class="w-full p-3 bg-stone-50 border rounded-lg outline-none focus:ring-2 focus:ring-amber-500/20" data-placeholder="input_phone">
+                </div>
+                <textarea id="orderSummary" readonly rows="5" class="w-full p-3 bg-stone-100 border rounded-lg font-mono text-xs md:text-sm" data-placeholder="input_summary_placeholder"></textarea>
+                <textarea id="custAddr" rows="3" required class="w-full p-3 bg-stone-50 border rounded-lg outline-none focus:ring-2 focus:ring-amber-500/20" data-placeholder="input_address"></textarea>
+                
+                <div class="bg-amber-50 p-4 rounded-xl border border-amber-100">
+                    <p class="text-sm font-semibold mb-3 text-amber-900" data-key="payment_label">Select Payment Method:</p>
+                    <div class="flex flex-wrap gap-4">
+                        <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="paymentMethod" value="cash" checked class="accent-amber-700"> <span data-key="pay_cod">Cash on Delivery</span></label>
+                        <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="paymentMethod" value="card" class="accent-amber-700"> <span data-key="pay_card">Card Payment</span></label>
+                    </div>
+                </div>
+                <button type="submit" id="btn-submit-order" class="w-full bg-amber-700 text-white py-4 rounded-xl font-bold text-lg hover:bg-amber-800 transition transform hover:-translate-y-1 shadow-lg" data-key="btn_place_order">Place My Order</button>
+            </form>
+            <div id="successMessage" class="hidden mt-6 p-4 bg-green-100 text-green-800 rounded-lg text-center border border-green-200">
+                <span id="successText" data-key="success_msg">Order placed successfully!</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Card Modal -->
+    <div id="cardModal" class="modal-overlay">
+        <div class="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-md mx-4 relative">
+            <button onclick="closeCardModal()" class="absolute top-4 right-4 text-stone-400 hover:text-stone-800">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h3 class="text-2xl font-bold text-amber-900 mb-6 flex items-center gap-2">
+                <i class="fa-solid fa-shield-halved"></i> <span data-key="card_modal_title">Card Information</span>
+            </h3>
+            <form onsubmit="finalizeCardOrder(event)" class="space-y-4">
+                <input type="text" placeholder="Card Number" maxlength="19" required class="w-full p-3 bg-stone-50 border rounded-lg">
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" placeholder="MM/YY" required class="p-3 bg-stone-50 border rounded-lg">
+                    <input type="password" placeholder="CVV" required class="p-3 bg-stone-50 border rounded-lg">
+                </div>
+                <button type="submit" class="w-full bg-amber-700 text-white py-4 rounded-xl font-bold mt-4" data-key="btn_pay">Pay & Confirm Order</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-stone-900 text-stone-500 py-12 text-center border-t border-stone-800">
+        <p>&copy; 2026 Deluxe Crumbs Bakery - Tissamaharama Outlet</p>
+    </footer>
+
+    <script>
+        const translations = {
+            en: {
+                nav_home: "Home",
+                nav_products: "Products",
+                nav_locations: "Locations",
+                nav_order: "Order Online",
+                cart_title: "Your Cart",
+                cart_empty: "Your cart is empty.",
+                cart_total_label: "Total:",
+                btn_checkout: "Checkout",
+                hero_title: "Artisan Breads & Heavenly Cakes",
+                hero_subtitle: "Handcrafted with love using traditional recipes.",
+                btn_menu: "View Menu",
+                btn_order: "Order Now",
+                products_title: "Our Special Menu",
+                products_subtitle: "Freshly baked 9 signature items for you.",
+                loc_status: "NOW OPEN",
+                loc_title: "Find Our Bakeries",
+                loc_subtitle: "We deliver across the Tissamaharama region.",
+                loc_outlet_name: "Tissamaharama Main Outlet",
+                loc_address: "No. 45, Main Street, Tissamaharama.",
+                loc_delivery: "Delivery Active",
+                order_title: "Order Online",
+                input_name: "Full Name",
+                input_phone: "Phone Number",
+                input_summary_placeholder: "Summary will appear here...",
+                input_address: "Full Delivery Address",
+                payment_label: "Select Payment Method:",
+                pay_cod: "Cash on Delivery",
+                pay_card: "Card Payment",
+                btn_place_order: "Place My Order",
+                success_msg: "Order placed successfully!",
+                card_modal_title: "Card Information",
+                btn_pay: "Pay & Confirm",
+                btn_add: "Add",
+                btn_added: "Added!",
+                process_msg: "Processing..."
+            },
+            si: {
+                nav_home: "මුල් පිටුව",
+                nav_products: "නිෂ්පාදන",
+                nav_locations: "ස්ථාන",
+                nav_order: "ඇණවුම් කරන්න",
+                cart_title: "ඔබේ කරත්තය",
+                cart_empty: "ඔබේ කරත්තය හිස් ය.",
+                cart_total_label: "එකතුව:",
+                btn_checkout: "ගෙවීම් කරන්න",
+                hero_title: "අතිවිශිෂ්ට පාන් සහ රසවත් කේක්",
+                hero_subtitle: "සාම්ප්‍රදායික වට්ටෝරු භාවිතයෙන් ආදරයෙන් නිපදවන ලදී.",
+                btn_menu: "මෙනුව බලන්න",
+                btn_order: "දැන් ඇණවුම් කරන්න",
+                products_title: "අපගේ විශේෂ මෙනුව",
+                products_subtitle: "ඔබ වෙනුවෙන්ම නැවුම්ව පිළිස්සූ විශේෂාංග අයිතම 9ක්.",
+                loc_status: "දැන් විවෘතයි",
+                loc_title: "අපගේ බේකරි සොයා ගන්න",
+                loc_subtitle: "අපි තිස්සමහාරාම ප්‍රදේශය පුරා බෙදා හැරීම් සිදු කරන්නෙමු.",
+                loc_outlet_name: "තිස්සමහාරාම ප්‍රධාන ශාඛාව",
+                loc_address: "අංක 45, ප්‍රධාන වීදිය, තිස්සමහාරාම.",
+                loc_delivery: "බෙදාහැරීම් ක්‍රියාත්මකයි",
+                order_title: "මාර්ගගතව ඇණවුම් කරන්න",
+                input_name: "සම්පූර්ණ නම",
+                input_phone: "දුරකථන අංකය",
+                input_summary_placeholder: "ඇණවුම් විස්තරය මෙහි දර්ශනය වේ...",
+                input_address: "සම්පූර්ණ ලිපිනය",
+                payment_label: "ගෙවීමේ ක්‍රමය තෝරන්න:",
+                pay_cod: "භාණ්ඩ ලැබුණු පසු මුදල් ගෙවීම",
+                pay_card: "කාඩ්පත් මගින් ගෙවීම",
+                btn_place_order: "ඇණවුම තහවුරු කරන්න",
+                success_msg: "ඇණවුම සාර්ථකව සිදු කරන ලදී!",
+                card_modal_title: "කාඩ්පත් තොරතුරු",
+                btn_pay: "ගෙවා තහවුරු කරන්න",
+                btn_add: "එකතු කරන්න",
+                btn_added: "එකතු කළා!",
+                process_msg: "සැකසෙමින් පවතී..."
+            }
+        };
+
+        const productsData = [
+            { id: 1, en: "Classic Sourdough", si: "සම්ප්‍රදායික සවර්ඩෝ පාන්", price: 850, img: "https://images.unsplash.com/photo-1589367920969-ab8e050bab0e?auto=format&fit=crop&w=600&q=80" },
+            { id: 2, en: "Midnight Cocoa Cake", si: "මිඩ්නයිට් කොකෝවා කේක්", price: 4500, img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80" },
+            { id: 3, en: "Buttery Croissants", si: "බටර් ක්‍රොයිසන්ට්ස්", price: 425, img: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=600&q=80" },
+            { id: 4, en: "French Baguette", si: "ප්‍රංශ බැගට් පාන්", price: 350, img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80" },
+            { id: 5, en: "Choco Chip Cookies", si: "චොකෝ චිප් කුකීස්", price: 150, img: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=600&q=80" },
+            { id: 6, en: "Velvet Cupcakes", si: "වෙල්වට් කප්කේක්", price: 280, img: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=600&q=80" },
+            { id: 7, en: "Glazed Doughnuts", si: "ග්ලේස්ඩ් ඩෝනට්ස්", price: 220, img: "https://images.unsplash.com/photo-1542310503-03940cad6586?auto=format&fit=crop&w=600&q=80" },
+            { id: 8, en: "Spiced Apple Pie", si: "ස්පයිස්ඩ් ඇපල් පයි", price: 1200, img: "https://images.unsplash.com/photo-1603532648955-039310d9ed75?auto=format&fit=crop&w=600&q=80" },
+            { id: 9, en: "Artisan Sandwich", si: "ආර්ටිසන් සැන්ඩ්විච්", price: 550, img: "https://images.unsplash.com/photo-1511018556340-d16986a1c194?auto=format&fit=crop&w=600&q=80" }
+        ];
+
+        let currentLang = 'en';
+        let cart = [];
+
+        function changeLang(lang) {
+            currentLang = lang;
+            
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (translations[lang][key]) el.innerText = translations[lang][key];
+            });
+
+            document.querySelectorAll('[data-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-placeholder');
+                if (translations[lang][key]) el.placeholder = translations[lang][key];
+            });
+
+            const updateToggle = (id, active) => {
+                const el = document.getElementById(id);
+                if(el) el.className = `px-3 py-1 rounded-full text-xs font-bold transition ${active ? 'bg-amber-700 text-white' : 'text-stone-500'}`;
+            };
+            
+            updateToggle('lang-en', lang === 'en');
+            updateToggle('lang-si', lang === 'si');
+            updateToggle('lang-en-mob', lang === 'en');
+            updateToggle('lang-si-mob', lang === 'si');
+
+            renderProducts();
+            updateUI();
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '';
+            productsData.forEach(p => {
+                const name = currentLang === 'en' ? p.en : p.si;
+                grid.innerHTML += `
+                    <div class="bg-white rounded-2xl overflow-hidden shadow-lg group">
+                        <div class="h-56 overflow-hidden">
+                            <img src="${p.img}" alt="${name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl mb-2">${name}</h3>
+                            <div class="flex justify-between items-center">
+                                <span class="text-lg font-bold text-amber-800">Rs. ${p.price.toFixed(2)}</span>
+                                <button onclick="addToCart(${p.id})" class="bg-amber-100 text-amber-800 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-amber-700 hover:text-white transition">
+                                    ${translations[currentLang].btn_add}
+                                </button>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function addToCart(pid) {
+            const p = productsData.find(x => x.id === pid);
+            const item = cart.find(i => i.id === pid);
+            if (item) item.quantity++;
+            else cart.push({ ...p, quantity: 1 });
+            updateUI();
+        }
+
+        function updateUI() {
+            const list = document.getElementById('cart-items');
+            const summary = document.getElementById('orderSummary');
+            list.innerHTML = cart.length ? '' : `<p class="text-center text-stone-400 mt-10">${translations[currentLang].cart_empty}</p>`;
+            
+            let total = 0, count = 0, text = "";
+            cart.forEach((item, idx) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal; count += item.quantity;
+                const name = currentLang === 'en' ? item.en : item.si;
+                text += `${name} x ${item.quantity} = Rs. ${itemTotal.toFixed(2)}\n`;
+                
+                list.innerHTML += `
+                    <div class="flex justify-between items-center bg-stone-50 p-3 rounded-lg border mb-2">
+                        <div class="flex-1 pr-2"><b class="text-stone-800 text-sm">${name}</b></div>
+                        <div class="flex items-center gap-3">
+                            <span class="font-bold text-amber-800 text-sm">Rs.${itemTotal}</span>
+                            <button onclick="removeItem(${idx})" class="text-red-500"><i class="fa-solid fa-trash-can"></i></button>
+                        </div>
+                    </div>`;
+            });
+
+            document.getElementById('cart-count').innerText = count;
+            document.getElementById('cart-count-mobile').innerText = count;
+            document.getElementById('cart-total').innerText = `Rs. ${total.toFixed(2)}`;
+            summary.value = cart.length ? `ORDER SUMMARY:\n------------------\n${text}\nTOTAL: Rs. ${total.toFixed(2)}` : "";
+        }
+
+        function removeItem(i) { cart.splice(i, 1); updateUI(); }
+        function toggleCart() { document.getElementById('cart-sidebar').classList.toggle('open'); document.getElementById('cart-overlay').classList.toggle('hidden'); }
+        function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
+        function checkoutToOrder() { if(cart.length) { toggleCart(); document.getElementById('order').scrollIntoView({behavior:'smooth'}); } }
+
+        function handleInitialOrder(e) {
+            e.preventDefault();
+            if(!cart.length) return;
+            if(document.querySelector('input[name="paymentMethod"]:checked').value === 'card') 
+                document.getElementById('cardModal').classList.add('active');
+            else completeOrder();
+        }
+
+        function closeCardModal() { document.getElementById('cardModal').classList.remove('active'); }
+        function finalizeCardOrder(e) { e.preventDefault(); closeCardModal(); completeOrder(); }
+
+        function completeOrder() {
+            const btn = document.getElementById('btn-submit-order');
+            btn.disabled = true; btn.innerText = translations[currentLang].process_msg;
+            setTimeout(() => {
+                document.getElementById('successMessage').classList.remove('hidden');
+                cart = []; updateUI(); document.getElementById('orderForm').reset();
+                btn.disabled = false; btn.innerText = translations[currentLang].btn_place_order;
+                setTimeout(() => document.getElementById('successMessage').classList.add('hidden'), 5000);
+            }, 1500);
+        }
+
+        window.onload = () => changeLang('en');
+    </script>
+</body>
+</html>
