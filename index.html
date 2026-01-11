@@ -230,11 +230,11 @@
             <h2 class="text-3xl text-amber-900 mb-6 text-center" data-key="order_title">Order Online</h2>
             <form action="https://formspree.io/f/maqqwzol" method="POST" id="orderForm" onsubmit="handleInitialOrder(event)" class="space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <input type="text" id="custName"name="email" required class="w-full p-3 bg-stone-50 border rounded-lg outline-none focus:ring-2 focus:ring-amber-500/20" data-placeholder="input_name">
-                    <input type="tel" id="custPhone"name="message" required class="w-full p-3 bg-stone-50 border rounded-lg outline-none focus:ring-2 focus:ring-amber-500/20" data-placeholder="input_phone">
+                    <input type="text" id="custName"name="name" required class="w-full p-3 bg-stone-50 border rounded-lg outline-none focus:ring-2 focus:ring-amber-500/20" data-placeholder="input_name">
+                    <input type="tel" id="custPhone"name="Phone" required class="w-full p-3 bg-stone-50 border rounded-lg outline-none focus:ring-2 focus:ring-amber-500/20" data-placeholder="input_phone">
                 </div>
-                <textarea id="orderSummary" readonly rows="5" class="w-full p-3 bg-stone-100 border rounded-lg font-mono text-xs md:text-sm" data-placeholder="input_summary_placeholder"></textarea>
-                <textarea id="custAddr" rows="3" required class="w-full p-3 bg-stone-50 border rounded-lg outline-none focus:ring-2 focus:ring-amber-500/20" data-placeholder="input_address"></textarea>
+                <textarea id="orderSummary"name="Summary" readonly rows="5" class="w-full p-3 bg-stone-100 border rounded-lg font-mono text-xs md:text-sm" data-placeholder="input_summary_placeholder"></textarea>
+                <textarea id="custAddr"name="massage" rows="3" required class="w-full p-3 bg-stone-50 border rounded-lg outline-none focus:ring-2 focus:ring-amber-500/20" data-placeholder="input_address"></textarea>
                 
                 <div class="bg-amber-50 p-4 rounded-xl border border-amber-100">
                     <p class="text-sm font-semibold mb-3 text-amber-900" data-key="payment_label">Select Payment Method:</p>
