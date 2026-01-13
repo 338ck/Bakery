@@ -12,10 +12,32 @@
         body { font-family: 'Poppins', 'Noto Sans Sinhala', sans-serif; }
         h1, h2, h3 { font-family: 'Playfair Display', 'Noto Sans Sinhala', serif; }
         
-        .hero-gradient {
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1200&q=80');
+        #hero-slideshow {
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
             background-size: cover;
             background-position: center;
+        }
+
+
+
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .hero-overlay {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5));
+            position: absolute;
+            inset: 0;
         }
 
         .scroll-smooth { scroll-behavior: smooth; }
@@ -28,34 +50,37 @@
             transform: translateX(0);
         }
 
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.6);
-            z-index: 100;
-            backdrop-filter: blur(4px);
-            align-items: center;
-            justify-content: center;
+        .nav-link-box {
+            padding: 0.5rem 1rem;
+            border: 1px solid transparent;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
-        .modal-overlay.active {
-            display: flex;
+        
+        .nav-link-box:hover {
+            background-color: rgba(180, 83, 9, 0.05);
+            color: #b45309;
         }
 
-        .status-pulse {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background-color: #10b981;
-            border-radius: 50%;
-            margin-right: 6px;
-            box-shadow: 0 0 0 rgba(16, 185, 129, 0.4);
-            animation: pulse 2s infinite;
+        .nav-link-box.active-link {
+            border-color: #b45309; 
+            background-color: rgba(180, 83, 9, 0.1);
+            color: #b45309;
+            font-weight: 600;
         }
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+
+        .contact-dark-gradient {
+            background: linear-gradient(135deg, #1c1917 0%, #292524 100%);
+        }
+        .contact-input-dark {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        .contact-input-dark:focus {
+            border-color: #b45309;
+            background: rgba(255, 255, 255, 0.08);
         }
     </style>
 </head>
@@ -65,54 +90,52 @@
     <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20 items-center">
-                <div class="flex items-center">
-                    <span class="text-xl md:text-2xl font-bold text-amber-700 tracking-wider">BAKERY CHAIN</span>
-                </div>
+                <a href="#home" onclick="setActive(document.querySelector('[data-key=nav_home]'))" class="flex items-center gap-2 group cursor-pointer">
+                    <div class="bg-amber-700 p-2 rounded-lg group-hover:bg-amber-800 transition-colors">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.5 14C17.5 15.3807 16.3807 16.5 15 16.5C13.6193 16.5 12.5 15.3807 12.5 14C12.5 12.6193 13.6193 11.5 15 11.5C16.3807 11.5 17.5 12.6193 17.5 14Z" fill="white"/>
+                            <path d="M10.5 10C10.5 11.3807 9.38071 12.5 8 12.5C6.61929 12.5 5.5 11.3807 5.5 10C5.5 8.61929 6.61929 7.5 8 7.5C9.38071 7.5 10.5 8.61929 10.5 10Z" fill="white"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C7.58172 2 4 5.58172 4 10C4 10.1171 4.00252 10.2335 4.00746 10.3492C2.8258 11.0207 2 12.31 2 13.8C2 15.485 3.0536 16.9234 4.52093 17.4851C4.82136 19.9882 6.91893 22 9.5 22C10.4286 22 11.2963 21.7397 12.0315 21.2891C12.7937 21.7512 13.693 22 14.6538 22C16.5401 22 18.156 20.6279 18.5276 18.8286C19.7824 18.1824 20.6154 16.8532 20.6154 15.3231C20.6154 13.9859 19.9749 12.7997 18.988 12.0538C19.6384 11.4554 20 10.6033 20 9.66154C20 7.82885 18.5861 6.32688 16.7845 6.17094C15.8239 3.73715 13.4478 2 10.6667 2H12Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <span class="text-xl md:text-2xl font-bold text-amber-700 tracking-wider uppercase">Bakery Chain</span>
+                </a>
+
                 <div class="hidden md:block">
-                    <div class="ml-4 flex items-center space-x-6">
-                        <a href="#home" class="hover:text-amber-600 transition" data-key="nav_home">Home</a>
-                        <a href="#about" class="hover:text-amber-600 transition" data-key="nav_about">About Us</a>
-                        <a href="#products" class="hover:text-amber-600 transition" data-key="nav_products">Products</a>
-                        <a href="#locations" class="hover:text-amber-600 transition" data-key="nav_locations">Locations</a>
-                        <a href="#contact" class="hover:text-amber-600 transition" data-key="nav_contact">Contact Us</a>
+                    <div class="ml-4 flex items-center space-x-2" id="nav-container">
+                        <a href="#home" class="nav-link-box transition active-link" onclick="setActive(this)" data-key="nav_home">Home</a>
+                        <a href="#about" class="nav-link-box transition" onclick="setActive(this)" data-key="nav_about">About Us</a>
+                        <a href="#products" class="nav-link-box transition" onclick="setActive(this)" data-key="nav_products">Products</a>
+                        <a href="#locations" class="nav-link-box transition" onclick="setActive(this)" data-key="nav_locations">Locations</a>
+                        <a href="#contact" class="nav-link-box transition" onclick="setActive(this)" data-key="nav_contact">Contact Us</a>
                         
-                        <!-- Language Switcher -->
-                        <div class="flex bg-stone-100 rounded-full p-1 border">
+                        <div class="flex bg-stone-100 rounded-full p-1 border ml-4">
                             <button onclick="changeLang('en')" id="lang-en" class="px-3 py-1 rounded-full text-xs font-bold transition bg-amber-700 text-white">EN</button>
                             <button onclick="changeLang('si')" id="lang-si" class="px-3 py-1 rounded-full text-xs font-bold transition text-stone-500">සිං</button>
                         </div>
 
-                        <button onclick="toggleCart()" class="relative p-2 text-stone-600 hover:text-amber-700 transition">
+
+
+
+                        <button onclick="toggleCart()" class="relative p-2 text-stone-600 hover:text-amber-700 transition ml-2">
                             <i class="fa-solid fa-cart-shopping text-xl"></i>
                             <span id="cart-count" class="absolute -top-1 -right-1 bg-amber-700 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold">0</span>
                         </button>
-                        <a href="#order" class="bg-amber-700 text-white px-6 py-2 rounded-full hover:bg-amber-800 transition" data-key="nav_order">Order Online</a>
+                        <a href="#order" class="bg-amber-700 text-white px-6 py-2 rounded-full hover:bg-amber-800 transition ml-4" onclick="setActive(null)" data-key="nav_order">Order Online</a>
                     </div>
                 </div>
-                <!-- Mobile Toggle -->
+
                 <div class="md:hidden flex items-center gap-3">
-                    <div class="flex bg-stone-100 rounded-full p-1 border scale-90">
-                        <button onclick="changeLang('en')" id="lang-en-mob" class="px-2 py-1 rounded-full text-[10px] font-bold">EN</button>
-                        <button onclick="changeLang('si')" id="lang-si-mob" class="px-2 py-1 rounded-full text-[10px] font-bold">සිං</button>
-                    </div>
-                    <button onclick="toggleCart()" class="relative p-2 text-stone-600">
-                        <i class="fa-solid fa-cart-shopping text-xl"></i>
-                        <span id="cart-count-mobile" class="absolute -top-1 -right-1 bg-amber-700 text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full font-bold">0</span>
-                    </button>
-                    <button onclick="toggleMobileMenu()" class="text-stone-600">
-                        <i class="fa-solid fa-bars text-2xl"></i>
-                    </button>
+                    <button onclick="toggleMobileMenu()" class="text-stone-600"><i class="fa-solid fa-bars text-2xl"></i></button>
                 </div>
             </div>
         </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t px-4 py-4 space-y-4 shadow-lg absolute w-full">
-            <a href="#home" onclick="toggleMobileMenu()" class="block hover:text-amber-600" data-key="nav_home">Home</a>
-            <a href="#about" onclick="toggleMobileMenu()" class="block hover:text-amber-600" data-key="nav_about">About Us</a>
-            <a href="#products" onclick="toggleMobileMenu()" class="block hover:text-amber-600" data-key="nav_products">Products</a>
-            <a href="#locations" onclick="toggleMobileMenu()" class="block hover:text-amber-600" data-key="nav_locations">Locations</a>
-            <a href="#contact" onclick="toggleMobileMenu()" class="block hover:text-amber-600" data-key="nav_contact">Contact Us</a>
-            <a href="#order" onclick="toggleMobileMenu()" class="block text-amber-700 font-bold" data-key="nav_order">Order Online</a>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t px-4 py-4 shadow-lg absolute w-full">
+            <a href="#home" onclick="toggleMobileMenu()" class="block py-2" data-key="nav_home">Home</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="block py-2" data-key="nav_about">About Us</a>
+            <a href="#products" onclick="toggleMobileMenu()" class="block py-2" data-key="nav_products">Products</a>
+            <a href="#locations" onclick="toggleMobileMenu()" class="block py-2" data-key="nav_locations">Locations</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block py-2" data-key="nav_contact">Contact Us</a>
         </div>
     </nav>
 
@@ -126,25 +149,37 @@
         <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4">
             <p class="text-center text-stone-400 mt-10" data-key="cart_empty">Your cart is empty.</p>
         </div>
-        <div class="p-6 border-t bg-stone-50">
-            <div class="flex justify-between text-xl font-bold mb-6">
+        <div class="p-6 border-t bg-stone-50 space-y-2">
+            <div class="flex justify-between text-stone-600 text-sm">
+                <span data-key="cart_subtotal_label">Subtotal:</span>
+                <span id="cart-subtotal">Rs. 0.00</span>
+            </div>
+            <div class="flex justify-between text-stone-600 text-sm">
+                <span data-key="cart_delivery_label">Delivery Cost:</span>
+                <span id="cart-delivery">Rs. 0.00</span>
+            </div>
+            <div class="flex justify-between text-xl font-bold pt-2 border-t">
                 <span data-key="cart_total_label">Total:</span>
                 <span id="cart-total" class="text-amber-800">Rs. 0.00</span>
             </div>
-            <button onclick="checkoutToOrder()" class="w-full bg-amber-700 text-white py-4 rounded-xl font-bold hover:bg-amber-800 transition" data-key="btn_checkout">
-                Checkout
-            </button>
+            <button onclick="checkoutToOrder()" class="w-full bg-amber-700 text-white py-4 rounded-xl font-bold hover:bg-amber-800 transition mt-4" data-key="btn_checkout">Checkout</button>
         </div>
     </div>
 
+
+
     <!-- Hero Section -->
-    <section id="home" class="hero-gradient h-screen flex items-center justify-center text-center text-white pt-20">
-        <div class="max-w-3xl px-4">
+    <section id="home" class="relative h-screen flex items-center justify-center text-center text-white pt-20 overflow-hidden">
+        <div id="hero-slideshow">
+            <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1200&q=80')"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1517433670267-08bbd4be890f?auto=format&fit=crop&w=1200&q=80')"></div>
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="max-w-3xl px-4 relative z-10">
             <h1 class="text-4xl md:text-7xl mb-6 leading-tight" data-key="hero_title">Artisan Breads & Heavenly Cakes</h1>
             <p class="text-lg md:text-xl mb-8 font-light" data-key="hero_subtitle">Handcrafted with love using traditional recipes.</p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#products" class="bg-white text-stone-900 px-8 py-3 rounded-full font-semibold hover:bg-amber-50 transition" data-key="btn_menu">View Menu</a>
-                <a href="#order" class="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-stone-900 transition" data-key="btn_order">Order Now</a>
+                <a href="#products" class="bg-white text-stone-900 px-8 py-3 rounded-full font-semibold" data-key="btn_menu">View Menu</a>
             </div>
         </div>
     </section>
@@ -153,21 +188,14 @@
     <section id="about" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row items-center gap-12">
-                <div class="md:w-1/2">
-                    <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=80" alt="About Bakery" class="rounded-3xl shadow-xl">
-                </div>
+                <div class="md:w-1/2"><img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=80" class="rounded-3xl shadow-xl" alt="Bakery Store"></div>
                 <div class="md:w-1/2">
                     <h2 class="text-4xl text-amber-900 mb-6" data-key="about_title">Our Story</h2>
-                    <p class="text-stone-600 mb-6 text-lg leading-relaxed" data-key="about_p1">Founded in the heart of Tissamaharama, BAKERY CHAIN started with a simple mission: to bring the authentic taste of artisan baking to our community. Every loaf of bread and every slice of cake we serve is a testament to our dedication to quality.</p>
-                    <p class="text-stone-600 mb-8 text-lg leading-relaxed" data-key="about_p2">We use only the finest ingredients, sourced locally whenever possible, to ensure that every bite you take is fresh, healthy, and absolutely delicious. Our bakers combine years of experience with traditional techniques to create wonders.</p>
+                    <p class="text-stone-600 mb-6 text-lg leading-relaxed" data-key="about_p1">Founded in the heart of Tissamaharama...</p>
                     <div class="grid grid-cols-2 gap-6">
                         <div class="border-l-4 border-amber-700 pl-4">
                             <h4 class="font-bold text-2xl text-amber-900">10+</h4>
                             <p class="text-stone-500 text-sm" data-key="about_stat1">Years Experience</p>
-                        </div>
-                        <div class="border-l-4 border-amber-700 pl-4">
-                            <h4 class="font-bold text-2xl text-amber-900">50+</h4>
-                            <p class="text-stone-500 text-sm" data-key="about_stat2">Unique Products</p>
                         </div>
                     </div>
                 </div>
@@ -180,11 +208,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-4xl text-amber-900 mb-4" data-key="products_title">Our Special Menu</h2>
-                <p class="text-stone-600" data-key="products_subtitle">Freshly baked 9 signature items for you.</p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10" id="product-grid">
-                <!-- Dynamic products -->
-            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10" id="product-grid"></div>
         </div>
     </section>
 
@@ -193,26 +218,13 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col lg:flex-row gap-12 items-center">
                 <div class="lg:w-1/2">
-                    <div class="inline-flex items-center bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold mb-4">
-                        <span class="status-pulse"></span> <span data-key="loc_status">NOW OPEN</span>
-                    </div>
                     <h2 class="text-4xl text-amber-900 mb-6" data-key="loc_title">Find Our Bakeries</h2>
-                    <p class="text-stone-600 mb-8 text-lg" data-key="loc_subtitle">We deliver across the Tissamaharama region.</p>
-                    
                     <div class="space-y-6">
-                        <div class="flex items-start gap-4 p-6 bg-white rounded-2xl shadow-md border-l-4 border-amber-600 transition hover:translate-x-1 duration-300">
+                        <div class="flex items-start gap-4 p-6 bg-white rounded-2xl shadow-md border-l-4 border-amber-600">
                             <i class="fa-solid fa-location-dot text-amber-700 mt-1 text-2xl"></i>
                             <div>
-                                <h4 class="font-bold text-xl text-stone-800" data-key="loc_outlet_name">Tissamaharama Main Outlet</h4>
-                                <p class="text-stone-500 mt-1" data-key="loc_address">No. 45, Main Street, Tissamaharama.</p>
-                                <div class="flex items-center gap-4 mt-4">
-                                    <span class="text-amber-700 text-sm font-semibold flex items-center gap-1">
-                                        <i class="fa-regular fa-clock"></i> 7:00 AM - 8:00 PM
-                                    </span>
-                                    <span class="text-green-600 text-sm font-semibold flex items-center gap-1">
-                                        <i class="fa-solid fa-truck-fast"></i> <span data-key="loc_delivery">Delivery Active</span>
-                                    </span>
-                                </div>
+                                <h4 class="font-bold text-xl text-stone-800">Tissamaharama Main Outlet</h4>
+                                <p class="text-stone-500">No. 45, Main Street, Tissamaharama.</p>
                             </div>
                         </div>
                     </div>
@@ -224,338 +236,220 @@
         </div>
     </section>
 
+    <!-- Contact Us Section -->
+    <section id="contact" class="py-24 contact-dark-gradient relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-amber-700/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-amber-900/10 rounded-full blur-3xl -ml-32 -mb-32"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl text-amber-500 mb-4" data-key="contact_title">Contact Us</h2>
+                <p class="text-stone-400" data-key="contact_subtitle">Get in touch with us for any inquiries or feedback.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                <div class="space-y-6">
+                    <div class="p-8 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl shadow-xl">
+                        <div class="space-y-8">
+                            <div class="flex items-center gap-6 group">
+                                <div class="w-14 h-14 bg-amber-600/20 text-amber-500 rounded-2xl flex items-center justify-center text-2xl group-hover:bg-amber-600 group-hover:text-white transition-all duration-300">
+                                    <i class="fa-solid fa-phone"></i>
+                                </div>
+                                <div>
+                                    <p class="text-stone-500 text-xs uppercase tracking-widest font-semibold mb-1" data-key="label_call">Call Us</p>
+                                    <p class="text-xl font-bold text-stone-100">+94 47 123 4567</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-6 group">
+                                <div class="w-14 h-14 bg-amber-600/20 text-amber-500 rounded-2xl flex items-center justify-center text-2xl group-hover:bg-amber-600 group-hover:text-white transition-all duration-300">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <p class="text-stone-500 text-xs uppercase tracking-widest font-semibold mb-1" data-key="label_email">Email Us</p>
+                                    <p class="text-xl font-bold text-stone-100">bakerychain@gmail.com</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-6 group">
+                                <div class="w-14 h-14 bg-amber-600/20 text-amber-500 rounded-2xl flex items-center justify-center text-2xl group-hover:bg-amber-600 group-hover:text-white transition-all duration-300">
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                </div>
+                                <div>
+                                    <p class="text-stone-500 text-xs uppercase tracking-widest font-semibold mb-1">WhatsApp</p>
+                                    <p class="text-xl font-bold text-stone-100">+94 77 123 4567</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white/5 backdrop-blur-md p-8 rounded-3xl border border-white/10 shadow-2xl">
+                    <form action="https://formspree.io/f/xqeezvzl" method="POST" class="space-y-5">
+                        <div class="space-y-2">
+                            <label class="text-stone-400 text-xs ml-1" data-key="input_name">Full Name</label>
+                            <input type="text" name="name" required class="w-full p-4 contact-input-dark rounded-xl outline-none transition-all placeholder:text-stone-600" data-placeholder="input_name">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-stone-400 text-xs ml-1" data-key="input_email">Email Address</label>
+                            <input type="email" name="email" required class="w-full p-4 contact-input-dark rounded-xl outline-none transition-all placeholder:text-stone-600" data-placeholder="input_email">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-stone-400 text-xs ml-1" data-key="input_message">Your Message</label>
+                            <textarea name="message" rows="4" required class="w-full p-4 contact-input-dark rounded-xl outline-none transition-all placeholder:text-stone-600" data-placeholder="input_message"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-amber-600 text-white py-4 rounded-xl font-bold hover:bg-amber-700 transition shadow-lg transform active:scale-95" data-key="btn_send">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Order Form -->
     <section id="order" class="py-24 max-w-3xl mx-auto px-4">
-        <div class="bg-white p-6 md:p-10 rounded-3xl shadow-2xl border">
+        <div class="bg-white p-10 rounded-3xl shadow-2xl border">
             <h2 class="text-3xl text-amber-900 mb-6 text-center" data-key="order_title">Order Online</h2>
-            <form action="https://formspree.io/f/xqeezvzl" method="POST" id="orderForm" onsubmit="handleInitialOrder(event)" class="space-y-6">
+            <form id="orderForm" onsubmit="handleInitialOrder(event)" class="space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <input type="text" id="custName"name="name" required class="w-full p-3 bg-stone-50 border rounded-lg outline-none focus:ring-2 focus:ring-amber-500/20" data-placeholder="input_name">
-                    <input type="tel" id="custPhone"name="Phone" required class="w-full p-3 bg-stone-50 border rounded-lg outline-none focus:ring-2 focus:ring-amber-500/20" data-placeholder="input_phone">
+                    <input type="text" id="custName" required class="w-full p-3 bg-stone-50 border rounded-lg" data-placeholder="input_name">
+                    <input type="tel" id="custPhone" required class="w-full p-3 bg-stone-50 border rounded-lg" data-placeholder="input_phone">
                 </div>
-                <textarea id="orderSummary"name="order_summary" readonly rows="5" class="w-full p-3 bg-stone-100 border rounded-lg font-mono text-xs md:text-sm" data-placeholder="input_summary_placeholder"></textarea>
-                <textarea id="custAddr"name="address" rows="3" required class="w-full p-3 bg-stone-50 border rounded-lg outline-none focus:ring-2 focus:ring-amber-500/20" data-placeholder="input_address"></textarea>
-                
-                <div class="bg-amber-50 p-4 rounded-xl border border-amber-100">
-                    <p class="text-sm font-semibold mb-3 text-amber-900" data-key="payment_label">Select Payment Method:</p>
-                    <div class="flex flex-wrap gap-4">
-                        <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="paymentMethod" value="cash" checked class="accent-amber-700"> <span data-key="pay_cod">Cash on Delivery</span></label>
-                        <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="paymentMethod" value="card" class="accent-amber-700"> <span data-key="pay_card">Card Payment</span></label>
-                    </div>
-                </div>
-                <button type="submit" id="btn-submit-order" class="w-full bg-amber-700 text-white py-4 rounded-xl font-bold text-lg hover:bg-amber-800 transition transform hover:-translate-y-1 shadow-lg" data-key="btn_place_order">Place My Order</button>
+                <textarea id="orderSummary" readonly rows="7" class="w-full p-3 bg-stone-100 border rounded-lg font-mono text-sm" data-placeholder="input_summary_placeholder"></textarea>
+                <textarea id="custAddr" rows="3" required class="w-full p-3 bg-stone-50 border rounded-lg" data-placeholder="input_address"></textarea>
+                <button type="submit" id="btn-submit-order" class="w-full bg-amber-700 text-white py-4 rounded-xl font-bold" data-key="btn_place_order">Place My Order</button>
             </form>
             <div id="successMessage" class="hidden mt-6 p-4 bg-green-100 text-green-800 rounded-lg text-center border border-green-200">
-                <span id="successText" data-key="success_msg">Order placed successfully!</span>
+                <span data-key="success_msg">Order placed successfully!</span>
             </div>
         </div>
     </section>
-
-    <!-- Contact Us Section -->
-    <section id="contact" class="py-24 bg-amber-900 text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl mb-4" data-key="contact_title">Contact Us</h2>
-                <p class="text-amber-200" data-key="contact_subtitle">We'd love to hear from you. Send us a message!</p>
-            </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <div class="space-y-8">
-                    <div class="flex items-center gap-6">
-                        <div class="bg-amber-800 w-14 h-14 rounded-full flex items-center justify-center text-2xl">
-                            <i class="fa-solid fa-phone"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-lg" data-key="contact_phone_label">Call Us</h4>
-                            <p class="text-amber-200">+94 47 123 4567</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-6">
-                        <div class="bg-amber-800 w-14 h-14 rounded-full flex items-center justify-center text-2xl">
-                            <i class="fa-solid fa-envelope"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-lg" data-key="contact_email_label">Email Us</h4>
-                            <p class="text-amber-200">bakerychain@gmail.com</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-6">
-                        <div class="bg-amber-800 w-14 h-14 rounded-full flex items-center justify-center text-2xl">
-                            <i class="fa-solid fa-clock"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-lg" data-key="contact_hours_label">Business Hours</h4>
-                            <p class="text-amber-200">Daily: 7:00 AM - 8:00 PM</p>
-                        </div>
-                    </div>
-                </div>
-                <form class="bg-white p-8 rounded-3xl space-y-4">
-                    <input type="text" class="w-full p-4 bg-stone-50 border rounded-xl text-stone-800 outline-none focus:ring-2 focus:ring-amber-500/20" data-placeholder="input_name">
-                    <input type="email" class="w-full p-4 bg-stone-50 border rounded-xl text-stone-800 outline-none focus:ring-2 focus:ring-amber-500/20" placeholder="Email Address">
-                    <textarea rows="4" class="w-full p-4 bg-stone-50 border rounded-xl text-stone-800 outline-none focus:ring-2 focus:ring-amber-500/20" placeholder="Your Message..."></textarea>
-                    <button type="button" class="w-full bg-amber-700 text-white py-4 rounded-xl font-bold hover:bg-amber-800 transition" data-key="btn_send">Send Message</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Card Modal -->
-    <div id="cardModal" class="modal-overlay">
-        <div class="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-md mx-4 relative">
-            <button onclick="closeCardModal()" class="absolute top-4 right-4 text-stone-400 hover:text-stone-800">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
-            <h3 class="text-2xl font-bold text-amber-900 mb-6 flex items-center gap-2">
-                <i class="fa-solid fa-shield-halved"></i> <span data-key="card_modal_title">Card Information</span>
-            </h3>
-            <form onsubmit="finalizeCardOrder(event)" class="space-y-4">
-                <input type="text" placeholder="Card Number" maxlength="19" required class="w-full p-3 bg-stone-50 border rounded-lg">
-                <div class="grid grid-cols-2 gap-4">
-                    <input type="text" placeholder="MM/YY" required class="p-3 bg-stone-50 border rounded-lg">
-                    <input type="password" placeholder="CVV" required class="p-3 bg-stone-50 border rounded-lg">
-                </div>
-                <button type="submit" class="w-full bg-amber-700 text-white py-4 rounded-xl font-bold mt-4" data-key="btn_pay">Pay & Confirm Order</button>
-            </form>
-        </div>
-    </div>
 
     <!-- Footer -->
     <footer class="bg-stone-900 text-stone-500 py-12 text-center border-t border-stone-800">
-        <p>&copy; 2026 BAKERY CHAIN - Tissamaharama Outlet</p>
+        <p>&copy; 2026 Bakery Chain - Tissamaharama Outlet</p>
     </footer>
 
     <script>
         const translations = {
             en: {
-                nav_home: "Home",
-                nav_about: "About Us",
-                nav_products: "Products",
-                nav_locations: "Locations",
-                nav_contact: "Contact Us",
-                nav_order: "Order Online",
-                cart_title: "Your Cart",
-                cart_empty: "Your cart is empty.",
-                cart_total_label: "Total:",
-                btn_checkout: "Checkout",
-                hero_title: "Artisan Breads & Heavenly Cakes",
-                hero_subtitle: "Handcrafted with love using traditional recipes.",
-                btn_menu: "View Menu",
-                btn_order: "Order Now",
-                about_title: "Our Story",
-                about_p1: "Founded in the heart of Tissamaharama, BAKERY CHAIN started with a simple mission: to bring the authentic taste of artisan baking to our community. Every loaf of bread and every slice of cake we serve is a testament to our dedication to quality.",
-                about_p2: "We use only the finest ingredients, sourced locally whenever possible, to ensure that every bite you take is fresh, healthy, and absolutely delicious.",
-                about_stat1: "Years Experience",
-                about_stat2: "Unique Products",
-                products_title: "Our Special Menu",
-                products_subtitle: "Freshly baked 9 signature items for you.",
-                loc_status: "NOW OPEN",
-                loc_title: "Find Our Bakeries",
-                loc_subtitle: "We deliver across the Tissamaharama region.",
-                loc_outlet_name: "Tissamaharama Main Outlet",
-                loc_address: "No. 45, Main Street, Tissamaharama.",
-                loc_delivery: "Delivery Active",
-                order_title: "Order Online",
-                input_name: "Full Name",
-                input_phone: "Phone Number",
-                input_summary_placeholder: "Summary will appear here...",
-                input_address: "Full Delivery Address",
-                payment_label: "Select Payment Method:",
-                pay_cod: "Cash on Delivery",
-                pay_card: "Card Payment",
-                btn_place_order: "Place My Order",
-                success_msg: "Order placed successfully!",
-                contact_title: "Contact Us",
-                contact_subtitle: "We'd love to hear from you. Send us a message!",
-                contact_phone_label: "Call Us",
-                contact_email_label: "Email Us",
-                contact_hours_label: "Business Hours",
-                btn_send: "Send Message",
-                card_modal_title: "Card Information",
-                btn_pay: "Pay & Confirm",
-                btn_add: "Add",
-                btn_added: "Added!",
-                process_msg: "Processing..."
+                nav_home: "Home", nav_about: "About Us", nav_products: "Products", nav_locations: "Locations", nav_contact: "Contact Us", nav_order: "Order Online",
+                cart_title: "Your Cart", cart_empty: "Your cart is empty.", cart_subtotal_label: "Subtotal:", cart_delivery_label: "Delivery Cost:", cart_total_label: "Total:", btn_checkout: "Checkout",
+                hero_title: "Artisan Breads & Heavenly Cakes", hero_subtitle: "Handcrafted with love using traditional recipes.", btn_menu: "View Menu",
+                about_title: "Our Story", about_p1: "Founded in the heart of Tissamaharama, BAKERY CHAIN started with a simple mission: to bring the authentic taste of artisan baking to our community. Every loaf of bread and every slice of cake we serve is a testament to our dedication to quality. We use only the finest ingredients, sourced locally whenever possible, to ensure that every bite you take is fresh, healthy, and absolutely delicious.", about_stat1: "Years Experience",
+                products_title: "Our Special Menu", loc_title: "Find Our Bakeries",
+                contact_title: "Contact Us", contact_subtitle: "Get in touch with us for any inquiries or feedback.",
+                label_call: "Call Us", label_email: "Email Us", btn_send: "Send Message",
+                order_title: "Order Online", input_name: "Full Name", input_phone: "Phone Number", input_email: "Email Address", input_message: "Your Message", input_summary_placeholder: "Summary will appear here...", input_address: "Full Delivery Address",
+                btn_place_order: "Place My Order", success_msg: "Order placed successfully!", btn_add: "Add", process_msg: "Processing..."
             },
             si: {
-                nav_home: "මුල් පිටුව",
-                nav_about: "අප ගැන",
-                nav_products: "නිෂ්පාදන",
-                nav_locations: "ස්ථාන",
-                nav_contact: "සම්බන්ධ වන්න",
-                nav_order: "ඇණවුම් කරන්න",
-                cart_title: "ඔබේ කරත්තය",
-                cart_empty: "ඔබේ කරත්තය හිස් ය.",
-                cart_total_label: "එකතුව:",
-                btn_checkout: "ගෙවීම් කරන්න",
-                hero_title: "අතිවිශිෂ්ට පාන් සහ රසවත් කේක්",
-                hero_subtitle: "සාම්ප්‍රදායික වට්ටෝරු භාවිතයෙන් ආදරයෙන් නිපදවන ලදී.",
-                btn_menu: "මෙනුව බලන්න",
-                btn_order: "දැන් ඇණවුම් කරන්න",
-                about_title: "අපේ කතාව",
-                about_p1: "තිස්සමහාරාමයේ හදවතේ පිහිටි බේකරි චේන් (Bakery Chain) ආරම්භ වූයේ සරල අරමුණක් ඇතිවය: අපගේ ප්‍රජාවට උසස් ප්‍රමිතියෙන් යුත් බේකරි නිෂ්පාදන ලබා දීම. අප පිරිනමන සෑම පාන් පෙත්තක්ම අපගේ ගුණාත්මකභාවය පිළිබඳ සහතිකයකි.",
-                about_p2: "අපි සෑම විටම නැවුම් සහ සෞඛ්‍ය සම්පන්න නිෂ්පාදන ලබා දීම සඳහා දේශීයව ලබා ගත හැකි ඉහළම ප්‍රමිතියෙන් යුතු අමුද්‍රව්‍ය පමණක් භාවිතා කරමු.",
-                about_stat1: "වසරක අත්දැකීම්",
-                about_stat2: "සුවිශේෂී නිෂ්පාදන",
-                products_title: "අපගේ විශේෂ මෙනුව",
-                products_subtitle: "ඔබ වෙනුවෙන්ම නැවුම්ව පිළිස්සූ විශේෂාංග අයිතම 9ක්.",
-                loc_status: "දැන් විවෘතයි",
-                loc_title: "අපගේ බේකරි සොයා ගන්න",
-                loc_subtitle: "අපි තිස්සමහාරාම ප්‍රදේශය පුරා බෙදා හැරීම් සිදු කරන්නෙමු.",
-                loc_outlet_name: "තිස්සමහාරාම ප්‍රධාන ශාඛාව",
-                loc_address: "අංක 45, ප්‍රධාන වීදිය, තිස්සමහාරාම.",
-                loc_delivery: "බෙදාහැරීම් ක්‍රියාත්මකයි",
-                order_title: "මාර්ගගතව ඇණවුම් කරන්න",
-                input_name: "සම්පූර්ණ නම",
-                input_phone: "දුරකථන අංකය",
-                input_summary_placeholder: "ඇණවුම් විස්තරය මෙහි දර්ශනය වේ...",
-                input_address: "සම්පූර්ණ ලිපිනය",
-                payment_label: "ගෙවීමේ ක්‍රමය තෝරන්න:",
-                pay_cod: "භාණ්ඩ ලැබුණු පසු මුදල් ගෙවීම",
-                pay_card: "කාඩ්පත් මගින් ගෙවීම",
-                btn_place_order: "ඇණවුම තහවුරු කරන්න",
-                success_msg: "ඇණවුම සාර්ථකව සිදු කරන ලදී!",
-                contact_title: "අපව සම්බන්ධ කරගන්න",
-                contact_subtitle: "ඔබේ අදහස් අපට එවන්න. අපි ඔබෙන් ඇසීමට කැමැත්තෙමු!",
-                contact_phone_label: "අප අමතන්න",
-                contact_email_label: "ඊමේල් එවන්න",
-                contact_hours_label: "විවෘත වේලාවන්",
-                btn_send: "පණිවිඩය එවන්න",
-                card_modal_title: "කාඩ්පත් තොරතුරු",
-                btn_pay: "ගෙවා තහවුරු කරන්න",
-                btn_add: "එකතු කරන්න",
-                btn_added: "එකතු කළා!",
-                process_msg: "සැකසෙමින් පවතී..."
+                nav_home: "මුල් පිටුව", nav_about: "අප ගැන", nav_products: "නිෂ්පාදන", nav_locations: "ස්ථාන", nav_contact: "සම්බන්ධ වන්න", nav_order: "ඇණවුම් කරන්න",
+                cart_title: "ඔබේ කරත්තය", cart_empty: "ඔබේ කරත්තය හිස් ය.", cart_subtotal_label: "එකතුව:", cart_delivery_label: "ප්‍රවාහන ගාස්තු:", cart_total_label: "මුළු එකතුව:", btn_checkout: "ගෙවීම් කරන්න",
+                hero_title: "අතිවිශිෂ්ට පාන් සහ රසවත් කේක්", hero_subtitle: "සාම්ප්‍රදායික වට්ටෝරු භාවිතයෙන් ආදරයෙන් නිපදවන ලදී.", btn_menu: "මෙනුව බලන්න",
+                about_title: "අපේ කතාව", about_p1: "තිස්සමහාරාම නගර මධ්‍යයේ ආරම්භ කරන ලද බේකරි චේන් සරල මෙහෙවරකින් ආරම්භ විය: අපගේ ප්‍රජාවට ශිල්පීන් විසින් පිළිස්සීමේ අව්‍යාජ රසය ගෙන ඒම. අපි පිරිනමන සෑම පාන් ගෙඩියක්ම සහ සෑම කේක් කැබැල්ලක්ම ගුණාත්මකභාවය සඳහා අපගේ කැපවීමට සාක්ෂියකි. අපි හොඳම අමුද්‍රව්‍ය පමණක් භාවිතා කරමු.", about_stat1: "වසරක අත්දැකීම්",
+                products_title: "අපගේ විශේෂ මෙනුව", loc_title: "අපගේ බේකරි සොයා ගන්න",
+                contact_title: "සම්බන්ධ වන්න", contact_subtitle: "ඕනෑම විමසීමක් හෝ ප්‍රතිපෝෂණයක් සඳහා අප හා සම්බන්ධ වන්න.",
+                label_call: "දුරකථන", label_email: "ඊමේල්", btn_send: "පණිවිඩය යවන්න",
+                order_title: "මාර්ගගතව ඇණවුම් කරන්න", input_name: "සම්පූර්ණ නම", input_phone: "දුරකථන අංකය", input_email: "ඊමේල් ලිපිනය", input_message: "ඔබේ පණිවිඩය", input_summary_placeholder: "ඇණවුම් විස්තරය මෙහි දර්ශනය වේ...", input_address: "සම්පූර්ණ ලිපිනය",
+                btn_place_order: "ඇණවුම තහවුරු කරන්න", success_msg: "ඇණවුම සාර්ථකව සිදු කරන ලදී!", btn_add: "එකතු කරන්න", process_msg: "සැකසෙමින් පවතී..."
             }
         };
 
+        
+
         const productsData = [
-            { id: 1, en: "Classic Sourdough", si: "සම්ප්‍රදායික සවර්ඩෝ පාන්", price: 850, img: "https://ichef.bbci.co.uk/food/ic/food_16x9_1600/recipes/classic_sourdough_21029_16x9.jpg" },
-            { id: 2, en: "Midnight Cocoa Cake", si: "මිඩ්නයිට් කොකෝවා කේක්", price: 4500, img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80" },
-            { id: 3, en: "Buttery Croissants", si: "බටර් ක්‍රොයිසන්ට්ස්", price: 425, img: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=600&q=80" },
-            { id: 4, en: "French Baguette", si: "ප්‍රංශ බැගට් පාන්", price: 350, img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80" },
-            { id: 5, en: "Choco Chip Cookies", si: "චොකෝ චිප් කුකීස්", price: 150, img: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=600&q=80" },
-            { id: 6, en: "Velvet Cupcakes", si: "වෙල්වට් කප්කේක්", price: 280, img: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=600&q=80" },
-            { id: 7, en: "Glazed Doughnuts", si: "ග්ලේස්ඩ් ඩෝනට්ස්", price: 220, img: "https://hips.hearstapps.com/hmg-prod/images/glazed-donut-recipe-1-65008ab2b45fb.jpg?crop=1xw:1xh;center,top&resize=1200:*" },
-            { id: 8, en: "Spiced Apple Pie", si: "ස්පයිස්ඩ් ඇපල් පයි", price: 1200, img: "https://images.unsplash.com/photo-1603532648955-039310d9ed75?auto=format&fit=crop&w=600&q=80" },
-            { id: 9, en: "Artisan Sandwich", si: "ආර්ටිසන් සැන්ඩ්විච්", price: 550, img: "https://images.unsplash.com/photo-1511018556340-d16986a1c194?auto=format&fit=crop&w=600&q=80" }
+            { id: 1, en: "Fish bread", si: "මාළු පාන්", price: 120, img: "https://www.hungrylankan.com/wp-content/uploads/2024/06/PXL_20230116_233439770.PORTRAIT-1-1-772x1024.jpg" },
+            { id: 2, en: "Bread", si: "පාන්", price: 190, img: "https://bmkltsly13vb.compat.objectstorage.ap-singapore-1.oraclecloud.com/cdn.sg.dailymirror.lk/assets/uploads/image_e76ca3a3c3.jpg" },
+            { id: 7, en: "Jam Paan", si: "ජෑම් පාන්", price: 110, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZ5fORC1npIbg9_I2wwaDdS9TJdorc165ixg&s" },
+            { id: 5, en: "Butter Cake", si: "බටර් කේක්", price: 1200, img: "https://yaluyalu.lk/cdn/shop/files/ButterCakebyYaluYalu1Kg2Kg.png?v=1733999385" },
+            { id: 6, en: "Vegetable Roti", si: "එළවලු රොටි", price: 150, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtfJ0Z2KVJmtsZoT8SWqvZISRbj7daWE_GZQ&s" },
+            { id: 8, en: "Ribbon cake", si: "රිබන් කේක්", price: 1450, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCKeTuCqlAMEXYzcK_uEUhPdCC-QagabniFA&s" }
         ];
 
-        let currentLang = 'en';
-        let cart = [];
+        let currentLang = 'en', cart = [], currentSlide = 0;
+        const DELIVERY_FEE = 150; // Set your delivery cost here
+
+        function startHeroSlideshow() {
+            const slides = document.querySelectorAll('.slide');
+            if (slides.length) setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 5000);
+        }
+
+        function setActive(element) {
+            document.querySelectorAll('.nav-link-box').forEach(l => l.classList.remove('active-link'));
+            if(element) element.classList.add('active-link');
+        }
 
         function changeLang(lang) {
             currentLang = lang;
-            
-            document.querySelectorAll('[data-key]').forEach(el => {
-                const key = el.getAttribute('data-key');
-                if (translations[lang][key]) el.innerText = translations[lang][key];
-            });
-
-            document.querySelectorAll('[data-placeholder]').forEach(el => {
-                const key = el.getAttribute('data-placeholder');
-                if (translations[lang][key]) el.placeholder = translations[lang][key];
-            });
-
-            const updateToggle = (id, active) => {
-                const el = document.getElementById(id);
-                if(el) el.className = `px-3 py-1 rounded-full text-xs font-bold transition ${active ? 'bg-amber-700 text-white' : 'text-stone-500'}`;
-            };
-            
-            updateToggle('lang-en', lang === 'en');
-            updateToggle('lang-si', lang === 'si');
-            updateToggle('lang-en-mob', lang === 'en');
-            updateToggle('lang-si-mob', lang === 'si');
-
-            renderProducts();
-            updateUI();
+            document.querySelectorAll('[data-key]').forEach(el => el.innerText = translations[lang][el.getAttribute('data-key')]);
+            document.querySelectorAll('[data-placeholder]').forEach(el => el.placeholder = translations[lang][el.getAttribute('data-placeholder')]);
+            renderProducts(); updateUI();
+            document.getElementById('lang-en').className = lang === 'en' ? 'px-3 py-1 rounded-full text-xs font-bold bg-amber-700 text-white' : 'px-3 py-1 rounded-full text-xs font-bold text-stone-500';
+            document.getElementById('lang-si').className = lang === 'si' ? 'px-3 py-1 rounded-full text-xs font-bold bg-amber-700 text-white' : 'px-3 py-1 rounded-full text-xs font-bold text-stone-500';
         }
 
         function renderProducts() {
             const grid = document.getElementById('product-grid');
-            grid.innerHTML = '';
-            productsData.forEach(p => {
-                const name = currentLang === 'en' ? p.en : p.si;
-                grid.innerHTML += `
-                    <div class="bg-white rounded-2xl overflow-hidden shadow-lg group">
-                        <div class="h-56 overflow-hidden">
-                            <img src="${p.img}" alt="${name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl mb-2">${name}</h3>
-                            <div class="flex justify-between items-center">
-                                <span class="text-lg font-bold text-amber-800">Rs. ${p.price.toFixed(2)}</span>
-                                <button onclick="addToCart(${p.id})" class="bg-amber-100 text-amber-800 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-amber-700 hover:text-white transition">
-                                    ${translations[currentLang].btn_add}
-                                </button>
-                            </div>
-                        </div>
-                    </div>`;
-            });
+            grid.innerHTML = productsData.map(p => `
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg group">
+                    <div class="h-56 overflow-hidden"><img src="${p.img}" class="w-full h-full object-cover group-hover:scale-105 transition" alt="${p.en}"></div>
+                    <div class="p-6"><h3 class="text-xl mb-2">${currentLang === 'en' ? p.en : p.si}</h3><div class="flex justify-between items-center"><span class="font-bold">Rs. ${p.price}</span><button onclick="addToCart(${p.id})" class="bg-amber-100 text-amber-800 px-4 py-2 rounded-lg hover:bg-amber-700 hover:text-white">${translations[currentLang].btn_add}</button></div></div>
+                </div>`).join('');
         }
 
         function addToCart(pid) {
             const p = productsData.find(x => x.id === pid);
             const item = cart.find(i => i.id === pid);
-            if (item) item.quantity++;
-            else cart.push({ ...p, quantity: 1 });
+            if (item) item.quantity++; else cart.push({ ...p, quantity: 1 });
             updateUI();
         }
 
         function updateUI() {
             const list = document.getElementById('cart-items');
-            const summary = document.getElementById('orderSummary');
-            list.innerHTML = cart.length ? '' : `<p class="text-center text-stone-400 mt-10">${translations[currentLang].cart_empty}</p>`;
+            list.innerHTML = cart.length ? cart.map((i, idx) => `<div class="flex justify-between border-b pb-2"><span>${currentLang === 'en' ? i.en : i.si} x ${i.quantity}</span><button onclick="removeItem(${idx})">🗑️</button></div>`).join('') : `<p class="text-center text-stone-400 mt-10">${translations[currentLang].cart_empty}</p>`;
             
-            let total = 0, count = 0, text = "";
-            cart.forEach((item, idx) => {
-                const itemTotal = item.price * item.quantity;
-                total += itemTotal; count += item.quantity;
-                const name = currentLang === 'en' ? item.en : item.si;
-                text += `${name} x ${item.quantity} = Rs. ${itemTotal.toFixed(2)}\n`;
-                
-                list.innerHTML += `
-                    <div class="flex justify-between items-center bg-stone-50 p-3 rounded-lg border mb-2">
-                        <div class="flex-1 pr-2"><b class="text-stone-800 text-sm">${name}</b></div>
-                        <div class="flex items-center gap-3">
-                            <span class="font-bold text-amber-800 text-sm">Rs.${itemTotal}</span>
-                            <button onclick="removeItem(${idx})" class="text-red-500"><i class="fa-solid fa-trash-can"></i></button>
-                        </div>
-                    </div>`;
-            });
+            const subtotal = cart.reduce((s, i) => s + i.price * i.quantity, 0);
+            const delivery = cart.length > 0 ? DELIVERY_FEE : 0;
+            const total = subtotal + delivery;
 
-            document.getElementById('cart-count').innerText = count;
-            document.getElementById('cart-count-mobile').innerText = count;
+            document.getElementById('cart-subtotal').innerText = `Rs. ${subtotal.toFixed(2)}`;
+            document.getElementById('cart-delivery').innerText = `Rs. ${delivery.toFixed(2)}`;
             document.getElementById('cart-total').innerText = `Rs. ${total.toFixed(2)}`;
-            summary.value = cart.length ? `ORDER SUMMARY:\n------------------\n${text}\nTOTAL: Rs. ${total.toFixed(2)}` : "";
+            document.getElementById('cart-count').innerText = cart.reduce((s, i) => s + i.quantity, 0);
+            
+            // Generate summary for order form
+            if (cart.length > 0) {
+                let summaryText = cart.map(i => `${currentLang === 'en' ? i.en : i.si} x ${i.quantity}`).join('\n');
+                summaryText += `\n\n------------------\n`;
+                summaryText += `${translations[currentLang].cart_subtotal_label} Rs. ${subtotal.toFixed(2)}\n`;
+                summaryText += `${translations[currentLang].cart_delivery_label} Rs. ${delivery.toFixed(2)}\n`;
+                summaryText += `${translations[currentLang].cart_total_label} Rs. ${total.toFixed(2)}`;
+                document.getElementById('orderSummary').value = summaryText;
+            } else {
+                document.getElementById('orderSummary').value = "";
+            }
         }
 
         function removeItem(i) { cart.splice(i, 1); updateUI(); }
         function toggleCart() { document.getElementById('cart-sidebar').classList.toggle('open'); document.getElementById('cart-overlay').classList.toggle('hidden'); }
         function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('hidden'); }
         function checkoutToOrder() { if(cart.length) { toggleCart(); document.getElementById('order').scrollIntoView({behavior:'smooth'}); } }
-
-        function handleInitialOrder(e) {
-            e.preventDefault();
-            if(!cart.length) return;
-            if(document.querySelector('input[name="paymentMethod"]:checked').value === 'card') 
-                document.getElementById('cardModal').classList.add('active');
-            else completeOrder();
-        }
-
-        function closeCardModal() { document.getElementById('cardModal').classList.remove('active'); }
-        function finalizeCardOrder(e) { e.preventDefault(); closeCardModal(); completeOrder(); }
-
-        function completeOrder() {
+        function handleInitialOrder(e) { 
+            e.preventDefault(); 
             const btn = document.getElementById('btn-submit-order');
             btn.disabled = true; btn.innerText = translations[currentLang].process_msg;
             setTimeout(() => {
                 document.getElementById('successMessage').classList.remove('hidden');
                 cart = []; updateUI(); document.getElementById('orderForm').reset();
                 btn.disabled = false; btn.innerText = translations[currentLang].btn_place_order;
-                setTimeout(() => document.getElementById('successMessage').classList.add('hidden'), 5000);
             }, 1500);
         }
 
-        window.onload = () => changeLang('en');
+        window.onload = () => { changeLang('en'); startHeroSlideshow(); };
     </script>
 </body>
 </html>
